@@ -167,8 +167,13 @@ namespace Qpix {
         tbranch_y_->Fill();
         tbranch_reset_->Fill();
         tbranch_tslr_->Fill();
+		
         tbranch_reset_truth_track_id_->Fill();
         tbranch_reset_truth_weight_->Fill();
+
+	    tbranch_initial_z_mean_->Fill();
+    	tbranch_initial_z_std_->Fill();
+    	tbranch_n_electrons_->Fill();		
     }
 
     //--------------------------------------------------------------------------
@@ -178,8 +183,13 @@ namespace Qpix {
         pixel_y_.clear();
         pixel_reset_.clear();
         pixel_tslr_.clear();
+		
         pixel_reset_truth_track_id_.clear();
         pixel_reset_truth_weight_.clear();
+		
+		pixel_initial_z_mean_.clear();
+		pixel_initial_z_std_.clear();
+		pixel_n_electrons_.clear();
     }
 
     //--------------------------------------------------------------------------
@@ -375,8 +385,13 @@ namespace Qpix {
             pixel_y_.push_back(Pixel[i].Y_Pix);
             pixel_reset_.push_back(Pixel[i].RESET);
             pixel_tslr_.push_back(Pixel[i].TSLR);
+			
             pixel_reset_truth_track_id_.push_back(Pixel[i].RESET_TRUTH_ID);
             pixel_reset_truth_weight_.push_back(Pixel[i].RESET_TRUTH_W);
+
+			pixel_initial_z_mean_.push_back(Pixel[i].Initial_Z_Mean);
+			pixel_initial_z_std_.push_back(Pixel[i].Initial_Z_Std);
+			pixel_n_electrons_.push_back(Pixel[i].N_Electrons);
         }
 
     }//AddEvent
