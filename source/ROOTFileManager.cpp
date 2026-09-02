@@ -44,9 +44,14 @@ namespace Qpix {
         tbranch_y_ = ttree_->Branch("pixel_y", &pixel_y_);
         tbranch_reset_ = ttree_->Branch("pixel_reset", &pixel_reset_);
         tbranch_tslr_ = ttree_->Branch("pixel_tslr", &pixel_tslr_);
+		
         tbranch_reset_truth_track_id_ = ttree_->Branch("pixel_reset_truth_track_id", &pixel_reset_truth_track_id_);
         tbranch_reset_truth_weight_ = ttree_->Branch("pixel_reset_truth_weight", &pixel_reset_truth_weight_);
 
+		tbranch_initial_z_mean_ = ttree_->Branch("pixel_initial_z_mean", &pixel_initial_z_mean_);
+		tbranch_initial_z_std_ = ttree_->Branch( "pixel_initial_z_std", &pixel_initial_z_std_);
+		tbranch_n_electrons_ = ttree_->Branch("pixel_n_electrons", &pixel_n_electrons_);
+		
         metadata_ = (TTree*) tfile_->Get("metadata");
 
         tbranch_w_value_ = metadata_->Branch("w_value", &w_value_);
