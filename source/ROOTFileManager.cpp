@@ -309,17 +309,29 @@ namespace Qpix {
             // Loop through the electrons 
             for (int i = 0; i < Nelectron; i++) 
             {
+				// Save the initial position of this electron
+    			double const initial_x = electron_loc_x;
+    			double const initial_y = electron_loc_y;
+    			double const initial_z = electron_loc_z;
+    			double const initial_t = electron_loc_t;
+				
                 // calculate drift time for diffusion 
-                T_drift = electron_loc_z / Qpix_params->E_vel;
+                T_drift = initial_z / Qpix_params->E_vel;
+
+				electron_loc_x += step_x;
+    			electron_loc_y += step_y;
+   				electron_loc_z += step_z;
+    			electron_loc_t += step_t;
+				
                 // electron lifetime
                 if (Qpix::RandomUniform() >= exp(-T_drift/Qpix_params->Life_Time)){continue;}
                 
                 // diffuse the electrons position
                 sigma_T = sqrt(2*Qpix_params->DiffusionT*T_drift);
                 sigma_L = sqrt(2*Qpix_params->DiffusionL*T_drift);
-                electron_x = Qpix::RandomNormal(electron_loc_x,sigma_T);
-                electron_y = Qpix::RandomNormal(electron_loc_y,sigma_T);
-                electron_z = Qpix::RandomNormal(electron_loc_z,sigma_L);
+                electron_x = Qpix::RandomNormal(initial_x, sigma_T);
+                electron_y = Qpix::RandomNormal(initial_y, sigma_T);
+                electron_z = Qpix::RandomNormal(initial_z, sigma_L);
 		
                 // add the electron to the vector.
                 hit_e.push_back(Qpix::ELECTRON());
@@ -330,14 +342,11 @@ namespace Qpix {
                 Pix_Yloc = (int) ceil(electron_y / Qpix_params->Pix_Size);
 
                 hit_e[indexer].Pix_ID = (int)(Pix_Xloc*10000+Pix_Yloc);
-                hit_e[indexer].time = electron_loc_t + ( electron_z / Qpix_params->E_vel );
+                hit_e[indexer].time = initial_t + ( electron_z / Qpix_params->E_vel);
                 hit_e[indexer].Trk_ID = hit_trk_id;
+				hit_e[indexer].Initial_Z = initial_z;
                 
                 // Move to the next electron
-                electron_loc_x += step_x;
-                electron_loc_y += step_y;
-                electron_loc_z += step_z;
-                electron_loc_t += step_t;
                 indexer += 1;
             }
         }
